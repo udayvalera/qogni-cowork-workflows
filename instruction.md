@@ -56,6 +56,9 @@ Create `workflow.yaml` in the workflow directory:
 version: 1
 name: "Spec Review Workflow"
 description: "Creates a review note and waits for manual completion."
+workflow_initialization_script: "mkdir -p workflow-state"
+workflow_environment_setup_script: "pnpm install --frozen-lockfile"
+workflow_cleanup_script: "rm -rf workflow-state/tmp"
 steps:
   - name: "Draft Review"
     description: "Create a spec review note in docs/review.md"
@@ -91,6 +94,11 @@ Workflow rules:
 - `version` must be `1`.
 - `name` is required and becomes the imported workflow name.
 - `description` can be a string or `null`.
+- `workflow_initialization_script` is optional. This is the startup script and runs once before step 1 (after dependencies are materialized).
+- `workflow_environment_setup_script` is optional. This is the per-step script and runs before every step.
+- `workflow_cleanup_script` is optional. This is the workflow clean script and runs once during promote-to-task, after the workflow has completed and before task creation.
+- Script fields are Bash snippets. Empty strings are normalized to `null`.
+- Script failures are blocking: startup/per-step failures fail the workflow execution, and workflow clean failures fail promotion.
 - `steps` run in order.
 - Every step requires `name`, `transition_type`, `require_approval`, and at least one default prompt with `executor_type: null`.
 - `transition_type: artifact_generated` requires `artifact_pattern`.
@@ -113,6 +121,9 @@ agents alongside the workflow.
     "version": 1,
     "name": "Custom Review Workflow",
     "description": "Runs a review step with a bundled custom agent.",
+    "workflow_initialization_script": "mkdir -p workflow-state",
+    "workflow_environment_setup_script": "pnpm install --frozen-lockfile",
+    "workflow_cleanup_script": "rm -rf workflow-state/tmp",
     "steps": [
       {
         "name": "Custom Review",
@@ -177,6 +188,7 @@ Before adding or updating a marketplace workflow:
 - Create the matching workflow directory.
 - Add exactly one definition file named by `definition_file`.
 - Ensure every step has a default prompt with `executor_type: null`.
+- If using startup/per-step/workflow clean scripts, keep them idempotent and safe to re-run.
 - Ensure artifact-generated steps produce the path in `artifact_pattern`.
 - Ensure bundled custom agents each include exactly one `soul` artifact.
 - Keep all catalog paths relative and free of `..`.
