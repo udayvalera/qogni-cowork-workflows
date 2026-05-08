@@ -1,4 +1,40 @@
 {
   "version": 1,
-  "workflows": []
+  "workflows": [
+    {
+      "id": "landing-page-sprint",
+      "directory": "landing-page-sprint",
+      "definition_file": "workflow-bundle.json",
+      "category": "web-development",
+      "tags": ["landing-page", "frontend", "design", "conversion"]
+    },
+    {
+      "id": "api-first-design",
+      "directory": "api-first-design",
+      "definition_file": "workflow-bundle.json",
+      "category": "api-development",
+      "tags": ["api", "openapi", "backend", "testing"]
+    },
+    {
+      "id": "code-review-sprint",
+      "directory": "code-review-sprint",
+      "definition_file": "workflow-bundle.json",
+      "category": "review",
+      "tags": ["code-review", "security", "performance", "quality"]
+    },
+    {
+      "id": "brownfield-onboarding",
+      "directory": "brownfield-onboarding",
+      "definition_file": "workflow-bundle.json",
+      "category": "brownfield",
+      "tags": ["onboarding", "architecture", "documentation", "legacy"]
+    },
+    {
+      "id": "bug-triage-fix",
+      "directory": "bug-triage-fix",
+      "definition_file": "workflow-bundle.json",
+      "category": "ops",
+      "tags": ["bug", "debugging", "triage", "testing"]
+    }
+  ]
 }
