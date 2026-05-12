@@ -35,6 +35,13 @@
       "definition_file": "workflow-bundle.json",
       "category": "ops",
       "tags": ["bug", "debugging", "triage", "testing"]
+    },
+    {
+      "id": "documentation-sprint",
+      "directory": "documentation-sprint",
+      "definition_file": "workflow-bundle.json",
+      "category": "review",
+      "tags": ["documentation", "jsdoc", "readme", "code-quality"]
     }
   ]
 }
